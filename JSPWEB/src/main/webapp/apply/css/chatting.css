@@ -1,0 +1,58 @@
+@charset "UTF-8";
+
+.chattingwrap{ display: flex; justify-content: center;  }
+.connectlistbox{ margin-right: 1%; }
+.connectbox{ display: flex; align-items: center; }
+.name{ margin-left: 5px; }
+.cattingBox{ width: 40%; }
+
+
+.contentbox{
+	border: 1px solid #eeeeee;
+	background-color: #212529;
+	color: white;
+	height: 700px;
+	overflow-y: scroll;
+	padding: 2%;
+}
+
+.secontent{ 
+	display: flex;	justify-content: flex-end; align-items: flex-end;
+	margin-bottom: 2%;
+}
+
+.date{ font-size: 2px; margin: 0 5px; }
+.content{
+	background-color: #4D4D4D; border-radius: 5px; padding: 2%; 
+	max-width: 70%;			/* 해당 구역의 최대 사이즈 설정 */
+	word-break: break-all; 	/* 자동 줄바꿈 처리 */	
+}
+
+.alarm{
+	background-color: #171717; border-radius: 5px;
+	font-size: 5px;	text-align: center;
+	width: 70%; margin: 20px auto;	padding: 1%;
+}
+
+.tocontent{ display: flex; justify-content: flex-start; align-items: flex-start; margin-bottom: 2%; }
+
+.rcontent{margin-left: 1%;}
+
+.name{ font-size: 12px; }
+
+.contentdate{ display: flex; align-items: flex-end; }
+
+
+.emotionFile{
+	display: flex;
+}
+
+.ButtonWarp{ display:flex; justify-content: space-between; }
+
+.emobtn{ background-color: transparent; border: none; padding: 1%; font-size: 23px; }
+
+.sendbtn{ width:97px; }
+
+.emolist{ width: 350px; 	height: 350px; overflow-y: scroll;}
+.emoji{ margin-bottom: 5%; }
+.imojicontent{ background-color: transparent; }

@@ -1,0 +1,14 @@
+@charset "UTF-8";
+
+.title{
+	margin-top: 4%;	margin-bottom: 3%;
+}
+
+.cNo, .bTitle, .bFile { margin-bottom: 1%;     height: 23px; }
+
+.wirteButtonWarp{ 
+	display:flex; justify-content: space-around;
+	margin-top: 3%;	
+}
+.writeBtn{ width:97px; }
+.bContent{ height: 150px; }

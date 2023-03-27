@@ -1,0 +1,55 @@
+@charset "UTF-8";
+
+.container h3{ font-size: 30px; font-weight: bold; text-align: center; }
+
+.container p{ text-align: center; }
+
+.signupForm{ width: 30%; margin: 30px auto; font-size: 15px; }
+
+.signupForm input{
+	width: 100%; height: 45px;
+	padding: 2%;
+	border: 1px solid #e8e8e8;
+}
+
+.title{	font-size: 15px; }
+
+.checkconfirm{ margin-bottom:20px; color:#c16f6f }
+
+.emailBox{ display: flex; }
+.emailBox button{
+	width: 20%; height: 45px;
+	background-color: #1E1F21;
+	color: white; font-size: 12px;
+	border: none; 	margin-left: 2%;
+}
+
+.authbox{ display: flex; margin-top: 2%; }
+.timebox{ margin-left: 2%; padding-top:10px;  }
+.authbox button{ 
+	margin-left: 2%;
+	width: 20%;
+	background-color: #1E1F21;
+	color: white;
+	border: none;
+}
+
+.pimgbox{ display: flex; align-items: center;}
+
+.premig{
+	margin-left: 2%;
+	width: 100px; height: 100px;
+	border: 1px solid #e8e8e8; border-radius: 50%;
+}
+
+.signupbtn{
+	width: 100%;
+    border: none;
+    background-color: #1E1F21;
+    font-size: 20px; color: white; font-weight: bold;
+    padding: 20px; margin: 20px 0px;
+}
+
+.subbtnbox{ text-align: center; color: #0000009e; }
+
+.subbtnbox a{ margin-left: 2%; margin-right: 2%; color: #0000009e; }

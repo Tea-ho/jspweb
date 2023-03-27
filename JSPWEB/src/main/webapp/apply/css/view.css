@@ -1,0 +1,49 @@
+@charset "UTF-8";
+
+.container h3{ margin-top: 3%; }
+
+.btop{ display: flex; flex-direction: column;}
+.btopT{	display: flex; justify-content: space-between; margin-top: 2%;
+		margin-bottom: 1%; border-top: 3px solid #362F2E;	padding-top: 1%;
+}
+
+.btopB{
+	display: flex; flex-direction: row; justify-content: space-between;
+    margin-bottom: 2%;  border-bottom: 1px solid #eeeeee;
+}
+
+.bNowrap, .bTitlewrap, .bDatewrap, .bImgwrap, .bInfowrap{ display: flex; align-items: center; }
+.pimgbox, .bDate, .pmid{ margin-left: 7px; }
+
+.bTitlewrap{ font-size: 17px; font-weight: bold; }
+
+.bFilewrap{ margin-bottom: 2%;	display: flex;	justify-content: flex-end; } 
+
+.bmiddle{ margin-bottom: 5%; }
+.bContent{  border-bottom: 1px solid #eeeeee; padding-bottom: 3%; }
+
+.bupdateBtn{ display: flex; justify-content: center; }
+.bupdateBtn button{ margin: 0 1%;	width: 85px; }
+
+.bFilewrap{ align-items: center; }
+.bFile{ margin-left: 1%; }
+
+/* --------------------------------------------------------------------- 댓글  */
+.replyTitle{ font-weight: bold; font-size: 15px; margin-bottom: 1%; }
+.bReplyListBox{
+	border-top: 3px solid #362F2E; border-bottom: 3px solid #362F2E;
+
+}
+
+#rContent{ height: 100px; margin: 1% 0; }
+
+.bReplyBox{ border-bottom: 3px solid #362F2E; }
+.bReplyListBox{ padding: 3% 0; }
+.bReplyBox{ padding: 1% 0; }
+
+.rwritebtnBox{
+	display: flex;
+    justify-content: flex-end;
+}
+
+.bupdateBtn{ margin-top: 3%; }
