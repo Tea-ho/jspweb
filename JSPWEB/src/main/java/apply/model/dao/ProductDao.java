@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import apply.model.dto.ProductDto;
 
 public class ProductDao extends Dao {
-	
 
 	private static ProductDao dao = new ProductDao();
 	private ProductDao() {}
@@ -84,7 +83,5 @@ public class ProductDao extends Dao {
 			
 		} catch (Exception e) { System.out.println("예외 발생: " + e); }
 		return false;
-		
 	}
-	
 }

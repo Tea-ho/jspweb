@@ -10,10 +10,17 @@ function onwrite(){
 	
 	let writeFormData = new FormData( writeForm );
 	
-	if(  pLat == 0 || pLat == 0 ){ alert('[알림] 위치 선택 후 제품 등록 부탁 드립니다.'); return; }
+	if(  pLat == 0 || pLat == 0 ){ alert('[알림] 위치를 선택해주세요.'); return; }
+	if( fileList.length < 1 ){ alert('[알림]하나 이상의 이미지를 등록해주세요.'); return; }
 	
 	writeFormData.set( "pLat" , pLat );
 	writeFormData.set( "pLng" , pLng );
+	
+	// 폼에 드래그된 파일 등록하기
+	fileList.forEach( (f) =>{
+		writeFormData.append( "fileList", f );
+	})
+	
 	
 	$.ajax({
 		url: "/JSPWEB/apply/product/info",
@@ -66,3 +73,41 @@ kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
     pLat = latlng.getLat();		 console.log(   "위도: "+latlng.getLat() )
     pLng = latlng.getLng();		 console.log(   "경도: "+latlng.getLng() )
 });
+
+// ----------------------------- 드래그앤드랍 구현 ---------------------------------
+// 1. 드래그앤드랍 구역 호출
+let fileDrop = document.querySelector('.fileDrop');
+
+// 2. 이벤트 등록
+fileDrop.addEventListener("dragenter", (e) => {
+	console.log('드래그 요소가 해당 구역에 닿을 때 실행');
+	e.preventDefault(); // 고유 이벤트 제거
+})
+
+fileDrop.addEventListener("dragover", (e) => {
+	console.log('드래그 요소가 해당 구역에 위치하고 있을 때 실행');
+	e.preventDefault(); // 고유 이벤트 제거
+})
+
+fileDrop.addEventListener("dragleave", (e) => {
+	console.log('드래그 요소가 해당 구역을 떠날 때 실행');
+	e.preventDefault(); // 고유 이벤트 제거
+})
+
+fileDrop.addEventListener("drop", (e) => {
+	console.log('드래그 요소가 해당 구역에 드랍되었을 때 실행');
+	// 문제점: 브라우저 영역에 드랍했을 때도 작동함
+	e.preventDefault(); // 고유 이벤트 제거
+	
+	// 드랍된 파일 호출
+	let files = e.dataTransfer.files;
+	console.log( files );
+	for( let i; i < files.length; i++ ){ // foreach사용 불가
+		if( files[i] != null && files[i] != undefined ){// null 아니거나 정의가 되어있으면(파일 존재하면)
+			fileList.push( files[i] );
+		}
+	}
+	console.log( fileList );
+})
+
+let fileList = []; // file담을 배열 생성
