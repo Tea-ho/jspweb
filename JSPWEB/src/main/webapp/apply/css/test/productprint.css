@@ -1,0 +1,206 @@
+@charset "UTF-8";
+*{ /* 전체 기본 css */
+	margin: 0px; padding: 0px;
+	list-style-type: none;
+}
+a{ color: black; text-decoration: none; }
+@font-face { /* 외부 폰트 */
+    font-family: 'KCC-Ganpan';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/KCC-Ganpan.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+/* ----------- 헤더 css ------------- */
+.header{	/* 헤더 구역 */
+	display: flex;	/* 레이아웃 */
+    align-items: center; /* 세로 가운데 */
+    justify-content: space-between; /* 가로 균등배치 */
+    margin : 20px 0px;
+}
+.mainlogo{ width: 10%; } /* 로고 박스 구역 */ 
+.mainlogo img { width: 100%; } /* 로고 이미지 */
+.mainmenu{  /* 메인 메뉴 구역 */
+	width: 70%; 
+	display: flex;
+    justify-content: center;
+    margin: 0px !important;	/* 부트스트랩 여백 제거 */
+    font-family: 'KCC-Ganpan';
+    font-size: 20px;
+} 
+.mainmenu li{ margin: 0px 10px; }
+.submenu{   /* 서브 메뉴 구역 */
+	width: 20%; 
+	display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+.submenu a{ margin-left: 15px; font-size: 13px; }
+
+ /* 1. 헤더 프로필 드롭다운 버튼 */
+.hpimghtn{
+	border: none ;
+    background-color: transparent;
+}
+.hpimg{ /* 2. 헤더 로그인 프로필 */
+	width: 50px;
+	height: 50px;
+	border: solid 1px #e8e8e8;
+	border-radius: 50%; /*둥근모서리*/
+}
+
+
+/* -------------------------- */
+html , body{
+	height: 100%;
+	/* 부모요소 의 사이즈가 존재해야지 자식요소의 사이즈 기준점 부모요소 */
+	/* 해당 구역의 스크롤바 제거 */
+	-ms-overflow-style:none;
+}
+/* 브라우저[크롬]의 스크롤바 제거 */
+::-webkit-scrollbar{ display: none; }
+
+/* 카카오지도 , 사이드바 구역 */
+.contentbox{
+	display: flex; width: 100%; height: 80%;
+}
+.searchbox{
+	position: fixed; left: 10px; top: 40%; z-index : 100;
+	width: 200px; height: 200px; background-color: white; 
+}
+/* 사이드바 */
+.produclistbox{ width: 25%; height: 100%; overflow: scroll; }
+.productbox{/* 제품 1개 구역 */ 
+	display: flex;
+	padding: 0px 5px 20px 5px;
+	border-bottom: 1px solid #eeeeee;
+	margin: 0px 5px 20px 5px; 
+}
+.pimgbox img{ /* 제품 대표이미지 */
+	height: 130px; width: 130px; object-fit : cover; /* 비율유지 , 해당 설정된 크기보다 커지면 짤림*/
+}
+.pcontentbox{ /* 제품 내용 구역 */
+	width: 100%; 
+	padding: 0px 15px;
+}
+.pname{ /* 제품 제목 */
+	font-family: 'KCC-Ganpan';
+	font-size: 20px;
+	height : 30px;
+	/* 내용물이 구역크기보다 커질때 ... */
+	overflow: hidden;
+	white-space: nowrap; /* 자동 줄바꿈처리 제거 */
+	text-overflow: ellipsis; /* ... */
+	max-width: 230px;	/* 표현할 최대 사이즈 : 최대사이즈보다 커지면 ... */
+}
+.pprice{ /* 제품 가격 */
+	text-align: right;
+	font-family: 'KCC-Ganpan';
+	font-size: 25px;
+	margin-top: 20px;
+}
+.pdate{ font-size: 10px; }
+.petc{ font-size: 12px; text-align: right; }
+
+* --------- 제품 상세 --------- */
+.pviewbox{	/* 제품 상세 구역 */
+	padding: 0px 20px 10px 20px;
+}
+.pviewinfo{	/* 제품 상세 상단 구역 */
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 15px;
+}
+.pbadge{	/* 제품 상세 버튼 */
+	background-color: #f66d85;
+	border: none;
+	border-radius: 10px;
+	padding: 3px 10px;
+	color:  white;
+}
+.pviewbox .pdate{
+	margin: 20px 0px 5px 0px;
+}
+.pviewbox .pcomment{
+	height: 120px;
+	font-size: 13px;
+}
+.pstate{ text-align: right; }
+.pviewbtnbox button{
+	border: none;
+	background-color: #f66d85;
+	width: 48%;
+	padding: 15px;
+	color: white;
+	font-size: 20px;
+	margin-top: 20px;
+	border-radius: 10px;
+	font-weight: bold;
+}
+/* 캐러셀 이미지 */
+.carousel-item img{
+	height: 270px;
+	object-fit : cover;
+}
+
+
+
+/* 제품 채팅 */
+.chatbox{ height: 100%; padding: 10px; }
+.chatcontent{
+	height: 80%;
+	border: 1px solid black;
+	padding: 20px;
+	overflow: scroll;
+}
+.sendbox{ text-align: right; }
+.receivebox{ text-align: left; }
+.chatbtn{
+	height: 10%;
+	display: flex;
+	margin-top: 10px;
+}
+.chatbtn textarea{
+	width: 80%;
+	resize: none;
+	padding: 10px;
+}
+.chatbtn button{
+	width: 20%;
+	border: nonew;
+	margin-left: 10px;
+	background-color: black;
+	color: white;
+	font-weight: bold;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

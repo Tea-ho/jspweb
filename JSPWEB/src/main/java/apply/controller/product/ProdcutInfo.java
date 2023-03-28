@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
@@ -36,32 +35,33 @@ public class ProdcutInfo extends HttpServlet {
         super();
 
     }
-
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    
+    ObjectMapper mapper = new ObjectMapper();
+    
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		request.setCharacterEncoding("UTF-8");
-		String east = request.getParameter("east");
-		String west = request.getParameter("west");
-		String south = request.getParameter("south");
-		String north = request.getParameter("north");
+		String 동 = request.getParameter("동");	// System.out.println(동);
+		String 서 = request.getParameter("서");	// System.out.println(서);
+		String 남 = request.getParameter("남");	// System.out.println(남);
+		String 북 = request.getParameter("북");	// System.out.println(북);
 		
-		ArrayList<ProductDto> result = ProductDao.getInstance().printProductList(east, west, south, north);
+		ArrayList<ProductDto> result = ProductDao.getInstance().getProductList( 동 , 서 , 남 , 북 );
+		String jsonarray = mapper.writeValueAsString(result);
 		
-		ObjectMapper mapper = new ObjectMapper();
-		String jsonArray = mapper.writeValueAsString(result);
 		
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json");
-		response.getWriter().print(jsonArray);
+		response.getWriter().print(jsonarray);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		// ------------------------------------------ commons.jar 라이브러리 사용 -----------------------------------------------
-		request.getParameter("UTF-8");
+		request.setCharacterEncoding("UTF-8");
 		// 1. 다운로드할 서버 경로 찾기
 		String path = request.getSession().getServletContext().getRealPath("/apply/product/pimg");
-		
+			System.out.println(path);
 		// 2. 찾은 경로의 파일/폴더 객체화
 		File pathObject = new File(path);
 		// 목적: setRepository에 넣기 위함. (setRepository 메소드 인수로 File을 받음)
@@ -82,7 +82,7 @@ public class ProdcutInfo extends HttpServlet {
 			// System.out.println(fileUpload.toString());			// --- 객체 주소값 확인
 		
 		try { // 예외처리 필수: fileUpload.parseRequest(request);
-			List<FileItem> fileList = fileUpload.parseRequest(request);
+			List<FileItem> fileList = fileUpload.parseRequest(request); // --- JS로 들어온 데이터 가져옴
 				System.out.println(fileUpload.toString());
 				System.out.println( fileList );
 				System.out.println( fileList.get(0) );
@@ -107,11 +107,11 @@ public class ProdcutInfo extends HttpServlet {
 						System.out.println( "첨부파일 필드값:" + item.getName());
 					
 					// (추가옵션) 사용자가 업로드한 첨부파일명 -> 식별가능한 이름으로 변경 작업: UUID 적용
-					String fileName = UUID.randomUUID() + " " + (item.getName().replace(" ", "-")); // 공백 제거
+					String fileName = UUID.randomUUID() + " " + (item.getName().replaceAll(" ", "-")); // 공백 제거
 					// 최종 식별 파일명: UUID 파일명 (사이에 띄어쓰기 존재)
 					// cos.jar에서는 DefaultFileRenamePolicy() 제공해줬기 때문에 첨부파일 변경 작업 생략함
 					
-					fieldFileList.add( item.getName() );
+					fieldFileList.add( fileName );
 					
 					File getFile = new File( path+"/"+fileName);
 					
@@ -131,13 +131,14 @@ public class ProdcutInfo extends HttpServlet {
 											Integer.parseInt( fieldElseList.get(2)),
 											fieldElseList.get(3), fieldElseList.get(4), mNo, fieldFileList );
 			
-				System.out.println("dto: " + dto);
+				// System.out.println("dto: " + dto);
 			
+			boolean result = ProductDao.getInstance().write(dto);
+			response.getWriter().print(result);
+				
 		} catch(Exception e) { System.out.println("예외 발생:" + e); }
 		
-		
-		
-		
+
 		// ------------------------------------------ cos.jar 라이브러리 사용 ---------------------------------------------------
 		/*
 		String path = request.getSession().getServletContext().getRealPath("/apply/product/pimg");

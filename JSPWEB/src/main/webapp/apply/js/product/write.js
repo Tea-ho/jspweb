@@ -1,5 +1,8 @@
 // console.log('연결확인');
 
+// 회원제 페이지
+if( memberInfo == null ){ alert('[알림] 로그인 후 제품등록이 가능합니다.'); location.href="/JSPWEB/apply/index.jsp"; }
+
 let pLat = 0;
 let pLng = 0;
 
@@ -35,19 +38,6 @@ function onwrite(){
 	});
 }
 
-printProductList();
-function printProductList(){
-	
-	$.ajax({
-		url: "/JSPWEB/apply/product/info",
-		method: "get",
-		success: (r)=>{
-			console.log(r);
-		}
-	})
-}
-
-
 // --------------------------  카카오 지도를 표시할 div 객체 ----------------------------
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
     mapOption = { 
@@ -75,6 +65,7 @@ kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
 });
 
 // ----------------------------- 드래그앤드랍 구현 ---------------------------------
+let fileList = []; // file담을 배열 생성
 // 1. 드래그앤드랍 구역 호출
 let fileDrop = document.querySelector('.fileDrop');
 
@@ -87,11 +78,13 @@ fileDrop.addEventListener("dragenter", (e) => {
 fileDrop.addEventListener("dragover", (e) => {
 	console.log('드래그 요소가 해당 구역에 위치하고 있을 때 실행');
 	e.preventDefault(); // 고유 이벤트 제거
+	fileDrop.style.backgroundColor = "#e8e8e8";
 })
 
 fileDrop.addEventListener("dragleave", (e) => {
 	console.log('드래그 요소가 해당 구역을 떠날 때 실행');
 	e.preventDefault(); // 고유 이벤트 제거
+	fileDrop.style.backgroundColor = "#ffffff";
 })
 
 fileDrop.addEventListener("drop", (e) => {
@@ -102,12 +95,33 @@ fileDrop.addEventListener("drop", (e) => {
 	// 드랍된 파일 호출
 	let files = e.dataTransfer.files;
 	console.log( files );
-	for( let i; i < files.length; i++ ){ // foreach사용 불가
+	for( let i = 0; i < files.length; i++ ){ // foreach사용 불가
 		if( files[i] != null && files[i] != undefined ){// null 아니거나 정의가 되어있으면(파일 존재하면)
 			fileList.push( files[i] );
 		}
 	}
+	fileDrop.style.backgroundColor = "#ffffff";
+	printFiles();
 	console.log( fileList );
 })
 
-let fileList = []; // file담을 배열 생성
+function printFiles(){
+	let html = '';
+	fileList.forEach( (f, i) => {
+		let fName = f.name;
+		let fSize = (f.size/1024).toFixed(2);
+		
+		html += `
+				<div>
+					<span> ${fName} / </span>
+					<span> ${fSize}KB </span>
+					<span> <button type="button" onclick="fileDelete(${i})"> X </button> </span>
+				</div>
+				`
+	})
+	fileDrop.innerHTML = html;
+}
+
+function fileDelete( i ){ // 삭제 후 랜더링
+	fileList.splice(i,1); printFiles();
+}
