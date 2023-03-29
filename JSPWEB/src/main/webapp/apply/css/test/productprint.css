@@ -48,7 +48,6 @@ a{ color: black; text-decoration: none; }
 	border-radius: 50%; /*둥근모서리*/
 }
 
-
 /* -------------------------- */
 html , body{
 	height: 100%;
@@ -101,7 +100,7 @@ html , body{
 .pdate{ font-size: 10px; }
 .petc{ font-size: 12px; text-align: right; }
 
-* --------- 제품 상세 --------- */
+/* --------- 제품 상세 --------- */
 .pviewbox{	/* 제품 상세 구역 */
 	padding: 0px 20px 10px 20px;
 }
@@ -143,8 +142,6 @@ html , body{
 	object-fit : cover;
 }
 
-
-
 /* 제품 채팅 */
 .chatbox{ height: 100%; padding: 10px; }
 .chatcontent{
@@ -174,11 +171,17 @@ html , body{
 	font-weight: bold;
 }
 
-
-
-
-
-
+/* ----------- 제품별로 채팅받은 목록 ------------- */
+.chatlist{
+	display: flex;
+	margin: 2%;
+	border-bottom: 1px solid #eeeeee;
+	padding-bottom: 2%;
+}
+.frominfo{ margin-left: 1%; }
+.fromndate{ font-size: 8px; }
+.frommid{ font-weight: bold; }
+.fromncontent{ font-size: 12px; }
 
 
 

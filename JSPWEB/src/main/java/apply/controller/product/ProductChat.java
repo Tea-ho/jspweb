@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import apply.controller.admin.Alarm;
 import apply.model.dao.MemberDao;
 import apply.model.dao.ProductDao;
 import apply.model.dto.ProductchatDto;
@@ -27,8 +28,9 @@ public class ProductChat extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int pno = Integer.parseInt(request.getParameter("pno"));
 		int mno = MemberDao.getInstance().getMNo((String)request.getSession().getAttribute("login"));
-	
-		ArrayList<ProductchatDto> result = ProductDao.getInstance().getChatList(pno, mno);
+		int chatmno = Integer.parseInt(request.getParameter("chatmno"));
+		
+		ArrayList<ProductchatDto> result = ProductDao.getInstance().getChatList(pno, mno, chatmno);
 		ObjectMapper mapper = new ObjectMapper();
 		String jsonArray =  mapper.writeValueAsString(result);
 		
@@ -42,11 +44,18 @@ public class ProductChat extends HttpServlet {
 		int pno = Integer.parseInt(request.getParameter("pno"));
 		int frommno = MemberDao.getInstance().getMNo((String)request.getSession().getAttribute("login"));
 		int tomno = Integer.parseInt(request.getParameter("tomno"));
-		
+			System.out.println("tomno:" + tomno);
 		ProductchatDto dto = new ProductchatDto(0, ncontent, null, pno, frommno, tomno);
 		System.out.println(dto.toString());
 		
 		boolean result = ProductDao.getInstance().setChat( dto );
+		
+		// (추가옵션 - 소캣 활용) 채팅 등록 성공 시, tomno에게 소캣 알림 메시지 보내기
+		if( result ) {
+			try {
+				Alarm.onMessage(null, tomno+","+ncontent); // --- 서버 소켓에게 채팅을 받은 유저 번호와 내용 전달
+			}catch (Exception e) {	System.out.println("예외 발생:" + e);}
+		}
 		response.getWriter().print(result);
 	}
 

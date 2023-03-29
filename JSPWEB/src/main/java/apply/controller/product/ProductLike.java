@@ -26,7 +26,7 @@ public class ProductLike extends HttpServlet {
 
     // 찜하기 가져오기
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int pNo = Integer.parseInt( request.getParameter("pNo") );
+		int pNo = Integer.parseInt( request.getParameter("pno") );
 		int mNo = MemberDao.getInstance().getMNo(
 				(String)request.getSession().getAttribute("login")
 				);
@@ -38,7 +38,7 @@ public class ProductLike extends HttpServlet {
 
 	// 찜하기 등록 / 취소
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int pNo = Integer.parseInt( request.getParameter("pNo") );
+		int pNo = Integer.parseInt( request.getParameter("pno") );
 		int mNo = MemberDao.getInstance().getMNo(
 				(String)request.getSession().getAttribute("login")
 				);

@@ -11,6 +11,7 @@
 
 	<%@include file = "/apply/header.jsp" %>
 	
+	<div> <a href="/JSPWEB/apply/product/write.jsp"><button type="button"> 제품등록 </button> </a> </div>
 	<!-- 모달창 -->
 	<div class="searchbox">
 		검색창
@@ -20,7 +21,7 @@
 		<!-- 지도 -->
 		<div id="map" style="width:75%;height:100%;"></div>
 		<!-- 사이드바 -->
-		<div class="produclistbox">
+		<div class="produclistbox">	
 		</div>
 	</div>
 	

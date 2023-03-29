@@ -47,3 +47,32 @@ function getLogin(){
 		}
 	})
 }
+
+// ------------------------------------------------- 쪽지 알림용 소캣
+let alarmsockat = null;
+if( memberInfo == null ){
+	
+} else{
+	// 1. 클라이언트 소켓 생성
+	alarmsockat = new WebSocket('ws://localhost:8080/JSPWEB/apply/alarm/'+memberInfo.mid);
+	// 2. 클라이언트 소켓 이벤트 메소드 정의
+	alarmsockat.onopen = (e) => { console.log('enter into alarm server sockat') }
+	alarmsockat.onclose = (e) => { console.log('leave alarm server sockat') }
+	alarmsockat.onerror = (e) => { console.log('error alarm server sockat') }
+	alarmsockat.onmessage = (e) => { onalarm(e); }
+}
+
+function onalarm(e){
+	let msgbox = document.querySelector('.msgbox');
+	msgbox.style.bottom = "50px";
+	
+	// 4초 후에 자동 내려가기: setInterval(정해진 시간을 주기로 실시), setTimeout(정해진 시간에 한번 실시)
+	setTimeout( ()=>{
+		msgbox.style.bottom = "-100px";
+	}, 4000 )
+	getcontent();
+	// 다수가 동시에 채팅 요청 시, DB 순서 꼬이는 상황 발생될 수 있음
+	// 해결 방안: DB와 통신하는 DAO 메소드에 synchronized 선언하여 동기화 방식으로 설정 적용
+	// 원리: 사용하고 있는 thread가 있으면, 다음 thread는 wait 상태처리
+	// 멀티스레드 선언하지 않았는데, thread 처리가 되는 이유: HttpServlet 멀티스레드 기반
+}

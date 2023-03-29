@@ -43,15 +43,19 @@
 				<li> <a href="/JSPWEB/apply/board/list.jsp?cNo=3"> QnA </a> </li>
 <!-- 				<li> <a href="/JSPWEB/apply/board/list.jsp?cNo=4"> Know-how </a> </li> -->
 				<li> <a href="/JSPWEB/apply/board/chatting.jsp"> Chat </a> </li>
+				<li> <a href="/JSPWEB/apply/product/print.jsp"> test </a> </li>
 			</ul>
 			
 			<div class="submenu">
 			</div>
 			
 		</div>
-
-	
 	</div>
+	
+	<div class="msgbox">
+		읽지 않은 메시지가 있습니다.
+	</div>
+	
 	<!-- 1. 최신 jquery(js 라이브러리) import (ajax 함수 활용하기 위함) -->
 	<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 	

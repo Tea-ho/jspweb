@@ -15,6 +15,8 @@ public class ProductchatDto {
     private int tomno;
     
     // 추가 필드
+    private String frommid;
+    private String frommimg;
     
 	public ProductchatDto() {
 		super();
@@ -73,4 +75,21 @@ public class ProductchatDto {
 	public void setTomno(int tomno) {
 		this.tomno = tomno;
 	}
+
+	public String getFrommid() {
+		return frommid;
+	}
+	
+	public void setFrommid(String frommid) {
+		this.frommid = frommid;
+	}
+
+	public String getFrommimg() {
+		return frommimg;
+	}
+
+	public void setFrommimg(String frommimg) {
+		this.frommimg = frommimg;
+	}
+	
 }

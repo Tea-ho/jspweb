@@ -13,8 +13,9 @@ public class ProductDao extends Dao {
 	private ProductDao() {}
 	public static ProductDao getInstance() { return dao; }
 	
+	// synchronized: 동기식으로 설정 
 	// 1. 제품 등록 
-	public boolean write( ProductDto dto ) {
+	public synchronized boolean write( ProductDto dto ) { 
 		// 1. 제품 우선 등록 
 		String sql ="insert into product(pname, pcomment, pprice, plat, plng , mno )"
 				+ " values(?,?,?,?,?,?)";
@@ -40,7 +41,7 @@ public class ProductDao extends Dao {
 	}
 	
 	// 2. 제품 호출
-	public ArrayList<ProductDto> getProductList( String 동 , String 서 , String 남 , String 북 ){
+	public synchronized ArrayList<ProductDto> getProductList( String 동 , String 서 , String 남 , String 북 ){
 		
 		System.out.println( 동);
 		System.out.println( 서);
@@ -82,7 +83,7 @@ public class ProductDao extends Dao {
 	}
 	
 	// 3. 찜하기 등록/취소 
-	public boolean setplike( int pno , int mno ) {
+	public synchronized boolean setplike( int pno , int mno ) {
 		// 1. 등록할지 취소할지 검색 먼저하기 
 		String sql ="select * from plike where pno = "+pno+" and mno = "+mno;
 		try {
@@ -102,7 +103,7 @@ public class ProductDao extends Dao {
 	}
 	
 	// 4. 현재 회원이 해당 제품의 찜하기 상태 확인 
-	public boolean getplike( int pno , int mno ) {
+	public synchronized boolean getplike( int pno , int mno ) {
 		String sql ="select * from plike where pno = "+pno+" and mno = "+mno;
 		try {
 			ps = con.prepareStatement(sql);	rs = ps.executeQuery();
@@ -111,7 +112,7 @@ public class ProductDao extends Dao {
 	}
 	
 	// 5. Chat 저장
-	public boolean setChat( ProductchatDto dto ) {
+	public synchronized boolean setChat( ProductchatDto dto ) {
 		String sql = "insert into note( ncontent, pno, frommno, tomno) values (?,?,?,?)";
 		try {
 			ps = con.prepareStatement(sql);
@@ -125,19 +126,49 @@ public class ProductDao extends Dao {
 	}
 	
 	// 6. Chat 출력
-	public ArrayList<ProductchatDto> getChatList( int pno, int mno ){
+	public synchronized ArrayList<ProductchatDto> getChatList( int pno, int mno, int chatmno ){
+		
 		ArrayList<ProductchatDto> list = new ArrayList<>();
-		String sql = "select * from note where pno = ? and (frommno = ? or tomno = ?)";
+		
+		// 모든 데이터 가져옴
+		// String sql = "select * from note where pno = ? and (frommno = ? or tomno = ?)";
+		// 문제점: 판매자 채팅에서 모든 구매희망자 메시지가 모두 출력됨
+		// 해결: sql 수정
+		
+		// 현재 같이 채팅하고 있는 데이터만 출력
+		// String sql = "select * from note where pno = ? and ((frommno = ? and tomno =?) or (frommno = ? and tomno =?)) ";
+		
+		String sql = "";
+		if( chatmno != 0 ) { 
+			sql = "select * from note where pno = ? and ((frommno = ? and tomno =?) or (frommno = ? and tomno =?))";
+		} else {
+			sql = "select * from note where pno = ? and (frommno = ? or tomno = ?)";
+		}
 		
 		try {
 			ps = con.prepareStatement(sql);
-			ps.setInt(1, pno); ps.setInt(2, mno); ps.setInt(3, mno);
+			ps.setInt(1, pno); ps.setInt(2, mno);
+			if( chatmno != 0 ) {
+				ps.setInt(3, chatmno); ps.setInt(4, chatmno);	ps.setInt(5, mno);
+			}
+			else {
+				ps.setInt(3, mno);
+			}
 			rs = ps.executeQuery();
 			while(rs.next()) {
-				list.add( new ProductchatDto(
+				ProductchatDto dto = new ProductchatDto(
 						rs.getInt(1), rs.getString(2), rs.getString(3),
 						rs.getInt(4), rs.getInt(5), rs.getInt(6)
-						));
+						);
+				
+				sql = "select mid, mimg from member where mno = "+rs.getInt(5);
+				ps = con.prepareStatement(sql);
+				ResultSet rs2 = ps.executeQuery();
+				if( rs2.next() ) {
+					dto.setFrommid(rs.getString(1));
+					dto.setFrommimg(rs.getString(2));
+				}
+				list.add( dto );
 			}	
 		} catch (Exception e) { System.out.println(e); }
 		return list; 
