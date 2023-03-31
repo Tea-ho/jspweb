@@ -12,6 +12,12 @@
 	<%@ include file = "../header.jsp" %>
 	
 	<div class="container">
+	
+		<h3> chart.js 사용 </h3>
+		<div>
+			<canvas id="myChart"></canvas>
+		</div>
+	
 		<h3 class="infoTitle"> 회원 리스트 </h3>
 		
 		<div class="searchSetBox">
@@ -48,7 +54,10 @@
 
 	<!-- 1. 최신 jquery(js 라이브러리) import (ajax 함수 활용하기 위함) -->
 	<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
-
+	
+	<!-- jsChart -->
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	
 	<script src="/JSPWEB/apply/js/admin/info.js" type="text/javascript"> </script>
 
 </body>

@@ -3,6 +3,7 @@ package apply.model.dao;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import apply.model.dto.ProductDto;
 import apply.model.dto.ProductchatDto;
@@ -172,5 +173,25 @@ public class ProductDao extends Dao {
 			}	
 		} catch (Exception e) { System.out.println(e); }
 		return list; 
+	}
+	
+	// 7. 날짜별 포인트 충전 내역
+	public HashMap<String, Integer> getSum(){ // HashMap: 원하는 타입으로 데이터 2개 저장 가능
+		
+		HashMap<String, Integer> map = new HashMap<>();		
+		String sql = "select "
+				+ " sum(if( mpcomment = '포인트구매', mpamount, 0 ))  as 충전포인트, "
+				+ " date_format( mpdate, '%y%m%d' ) as 충전날짜 "
+				+ " from mpoint "
+				+ " group by date_format( mpdate, '%y%m%d' ) "
+				+ " order by 충전날짜 desc "
+				+ " limit 5";
+		try {
+			ps = con.prepareStatement(sql);		rs = ps.executeQuery();
+			while(rs.next()) {
+				map.put( rs.getString(2), rs.getInt(1) );
+			} 
+		} catch(Exception e){ System.err.println(e); }
+		return map;
 	}
 }

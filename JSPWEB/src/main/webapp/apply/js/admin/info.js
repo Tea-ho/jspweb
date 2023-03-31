@@ -1,5 +1,40 @@
 console.log('js열림');
 
+
+// ---------------------------------------- chart code: jsChart api
+const ctx = document.getElementById('myChart');
+
+// DB에서 가져온 자료 jsChart에 입히기
+$.get("/JSPWEB/apply/point", (r)=>{
+	console.log( r );					// --- HashMap으로 받은 데이터
+	console.log( Object.keys(r) ); 		// --- key 배열로 추출
+	console.log( Object.values(r) ); 	// --- values 배열로 추출
+	
+  // --------------------------------------- JS Chart API: 객체 생성
+  new Chart(ctx, {
+    type: 'bar',	//---- 희망하는 chart type 설정: API에서 제공해줌
+    data: {			//---- data 들어가는 자리
+      labels: Object.keys(r), //---- 가로축
+      datasets: [{
+        label: '포인트 충전 내역',
+        data: Object.values(r), //---- 실제 데이터
+        borderWidth: 10,
+        
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+	
+	
+});
+
+// ---------------------------------------- 회원 정보 출력 메소드
 let mListObject = {
 	page: 1,
 	listsize: 5,
